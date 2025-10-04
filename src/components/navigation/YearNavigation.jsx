@@ -1,5 +1,33 @@
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { AVAILABLE_YEARS } from "../../data/timelineData";
+
+// Styled components
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  '& .MuiToggleButton-root': {
+    border: '1px solid',
+    borderColor: theme.palette.divider,
+    borderRadius: '8px',
+    minWidth: '60px',
+    padding: '0.5rem 1rem',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    '&.Mui-selected': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+      '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
+      },
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}));
+
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  margin: '0.4rem',
+}));
 
 /**
  * Year navigation component with scroll-to-section functionality
@@ -10,7 +38,7 @@ import { AVAILABLE_YEARS } from "../../data/timelineData";
 const YearNavigation = ({ selectedYear, onYearSelect }) => {
   const handleAllYearsClick = () => {
     onYearSelect(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleYearClick = (year) => {
@@ -22,14 +50,14 @@ const YearNavigation = ({ selectedYear, onYearSelect }) => {
     const yearElement = document.getElementById(`year-${year}`);
     if (yearElement) {
       yearElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
 
   return (
-    <ToggleButtonGroup
+    <StyledToggleButtonGroup
       value={selectedYear}
       exclusive
       onChange={(event, newValue) => {
@@ -41,41 +69,17 @@ const YearNavigation = ({ selectedYear, onYearSelect }) => {
       }}
       aria-label="year navigation"
       size="small"
-      sx={{
-        '& .MuiToggleButton-root': {
-          border: '1px solid rgba(229, 231, 235, 1)',
-          borderRadius: '8px',
-          minWidth: '60px',
-          padding: '0.5rem 1rem',
-          fontSize: '0.875rem',
-          fontWeight: 500,
-          '&.Mui-selected': {
-            backgroundColor: '#111111',
-            color: '#ffffff',
-            '&:hover': {
-              backgroundColor: '#111111',
-            },
-          },
-          '&:hover': {
-            backgroundColor: '#cbd5e1',
-            color: '#0f172a',
-          },
-        },
-      }}
     >
-      <ToggleButton value={null} aria-label="View all years">
-        All Years
-      </ToggleButton>
       {AVAILABLE_YEARS.map((year) => (
-        <ToggleButton 
-          key={year} 
+        <StyledToggleButton
+          key={year}
           value={year}
           aria-label={`Navigate to ${year} timeline`}
         >
           {year}
-        </ToggleButton>
+        </StyledToggleButton>
       ))}
-    </ToggleButtonGroup>
+    </StyledToggleButtonGroup>
   );
 };
 

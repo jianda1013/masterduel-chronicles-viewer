@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppHeader from "./components/layout/AppHeader";
 import TimelineContainer from "./components/timeline/TimelineContainer";
 import FloatingActionButton from "./components/ui/FloatingActionButton";
+import { ThemeProvider, useTheme } from "./contexts";
 
-// Create a custom theme that matches your design
-const theme = createTheme({
+// Create theme configuration function that supports both light and dark modes
+const createAppTheme = (isDarkMode) => createTheme({
   palette: {
-    mode: 'light',
+    mode: isDarkMode ? 'dark' : 'light',
     primary: {
       main: '#667eea',
       light: '#764ba2',
@@ -17,13 +18,14 @@ const theme = createTheme({
       main: '#f093fb',
     },
     background: {
-      default: '#ffffff',
-      paper: '#f3f4f6',
+      default: isDarkMode ? '#0f0f0f' : '#ffffff',
+      paper: isDarkMode ? '#1a1a1a' : '#f3f4f6',
     },
     text: {
-      primary: '#111111',
-      secondary: '#666666',
+      primary: isDarkMode ? '#ffffff' : '#111111',
+      secondary: isDarkMode ? '#a0a0a0' : '#666666',
     },
+    divider: isDarkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.12)',
   },
   typography: {
     fontFamily: 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif',
@@ -43,10 +45,14 @@ const theme = createTheme({
           borderRadius: 8,
           textTransform: 'none',
           fontWeight: 500,
-          boxShadow: '0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.06)',
+          boxShadow: isDarkMode 
+            ? '0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2)'
+            : '0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.06)',
           '&:hover': {
             transform: 'translateY(-1px)',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            boxShadow: isDarkMode 
+              ? '0 4px 12px rgba(0, 0, 0, 0.4)'
+              : '0 4px 12px rgba(0, 0, 0, 0.15)',
           },
         },
       },
@@ -54,11 +60,22 @@ const theme = createTheme({
     MuiFab: {
       styleOverrides: {
         root: {
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+          boxShadow: isDarkMode 
+            ? '0 4px 20px rgba(0, 0, 0, 0.4)'
+            : '0 4px 20px rgba(0, 0, 0, 0.15)',
           '&:hover': {
             transform: 'translateY(-2px) scale(1.05)',
-            boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+            boxShadow: isDarkMode 
+              ? '0 8px 25px rgba(0, 0, 0, 0.5)'
+              : '0 8px 25px rgba(0, 0, 0, 0.2)',
           },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
         },
       },
     },
@@ -66,11 +83,12 @@ const theme = createTheme({
 });
 
 /**
- * Main application component
+ * App content component that uses theme context
  * Manages year selection state and coordinates navigation between timeline sections
  */
-function App() {
+function AppContent() {
   const [selectedYear, setSelectedYear] = useState(null);
+  const { isDarkMode } = useTheme();
 
   const handleYearSelect = (year) => {
     setSelectedYear(year);
@@ -81,8 +99,10 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const theme = createAppTheme(isDarkMode);
+
   return (
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <div className="app">
         <AppHeader 
@@ -104,6 +124,17 @@ function App() {
           />
         </div>
       </div>
+    </MuiThemeProvider>
+  );
+}
+
+/**
+ * Main application component with theme provider
+ */
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

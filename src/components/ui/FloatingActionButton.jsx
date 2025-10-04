@@ -1,4 +1,13 @@
 import { Fab, Tooltip } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+// Styled components
+const StyledFab = styled(Fab)(({ theme }) => ({
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-2px) scale(1.05)',
+  },
+}));
 
 /**
  * Floating Action Button component for quick navigation
@@ -18,20 +27,14 @@ const FloatingActionButton = ({
 }) => {
   return (
     <Tooltip title={title} placement="left">
-      <Fab
+      <StyledFab
         onClick={onClick}
         aria-label={title}
         color={color}
         size={size}
-        sx={{
-          transition: 'all 0.3s ease',
-          '&:hover': {
-            transform: 'translateY(-2px) scale(1.05)',
-          },
-        }}
       >
         {icon}
-      </Fab>
+      </StyledFab>
     </Tooltip>
   );
 };

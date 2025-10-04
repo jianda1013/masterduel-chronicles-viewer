@@ -1,6 +1,19 @@
 import { Box, Divider } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import TimelineSection from "./TimelineSection";
 import { getAllTimelineData } from "../../data/timelineData";
+
+// Styled components
+const StyledMainBox = styled(Box)(({ theme }) => ({
+  width: '100%',
+}));
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  margin: '3rem 0',
+  background: `linear-gradient(90deg, transparent, ${theme.palette.divider}, transparent)`,
+  height: '2px',
+  border: 'none',
+}));
 
 /**
  * Timeline container component that renders all year sections
@@ -10,27 +23,16 @@ const TimelineContainer = () => {
   const timelineData = getAllTimelineData();
 
   return (
-    <Box 
-      component="main" 
-      role="main"
-      sx={{ width: '100%' }}
-    >
+    <StyledMainBox component="main" role="main">
       {timelineData.map((yearData, index) => (
         <Box key={yearData.id}>
           <TimelineSection yearData={yearData} />
           {index < timelineData.length - 1 && (
-            <Divider 
-              sx={{
-                margin: '3rem 0',
-                background: 'linear-gradient(90deg, transparent, rgba(229, 231, 235, 1), transparent)',
-                height: '2px',
-                border: 'none',
-              }}
-            />
+            <StyledDivider />
           )}
         </Box>
       ))}
-    </Box>
+    </StyledMainBox>
   );
 };
 

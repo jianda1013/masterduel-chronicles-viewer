@@ -16,6 +16,7 @@ export { default as TimelineSection } from './timeline/TimelineSection';
 
 // UI Components
 export { default as FloatingActionButton } from './ui/FloatingActionButton';
+export { default as ThemeToggle } from './ui/ThemeToggle';
 
 // Common Hooks
 export { useScrollHandler } from './common/ScrollHandler';

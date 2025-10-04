@@ -5,6 +5,7 @@ A modern, interactive web application for viewing Yu-Gi-Oh! Master Duel Chronicl
 ## Features
 
 - **Interactive Timeline Navigation**: Navigate between different years (2022-2025) with smooth scrolling
+- **Dark/Light Mode**: Toggle between dark and light themes with localStorage persistence
 - **Responsive Design**: Optimized for desktop and mobile devices
 - **Modern UI**: Clean, gradient-based design with hover effects and smooth transitions
 - **Year Selection**: Toggle between viewing all years or focusing on specific years
@@ -87,8 +88,10 @@ pnpm dev
 
 1. **View All Years**: By default, the application shows all chronicle years in a scrollable timeline
 2. **Navigate to Specific Year**: Use the year navigation buttons in the header to jump to specific years
-3. **Return to Top**: Click the floating action button (↑) to return to the top of the page
-4. **Responsive Navigation**: On mobile devices, the year navigation adapts to smaller screens
+3. **Toggle Dark Mode**: Click the theme toggle button (🌙/☀️) in the header to switch between light and dark themes
+4. **Return to Top**: Click the floating action button (↑) to return to the top of the page
+5. **Responsive Navigation**: On mobile devices, the year navigation adapts to smaller screens
+6. **Theme Persistence**: Your theme preference is automatically saved and restored on future visits
 
 ## Customization
 
