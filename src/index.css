@@ -1,0 +1,490 @@
+/* ==========================================================================
+   MASTER DUEL CHRONICLES VIEWER - STYLES
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CSS VARIABLES & ROOT STYLES
+   ========================================================================== */
+
+:root {
+  /* Color Scheme */
+  --bg: #ffffff;
+  --fg: #111111;
+  --bar: #ffffff;
+  --bar-border: #e5e7eb;
+  --btn-bg: #f3f4f6;
+  --btn-fg: #111111;
+  --btn-active-bg: #111111;
+  --btn-active-fg: #ffffff;
+  --btn-hover-bg: #cbd5e1;
+  --btn-hover-fg: #0f172a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+
+  /* Animation */
+  --headbar-transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --headbar-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Base Styles */
+  color-scheme: light dark;
+  color: var(--fg);
+  background-color: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Mode Variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f0f;
+    --fg: #f5f5f5;
+    --bar: #1a1a1a;
+    --bar-border: #2d2d2d;
+    --btn-bg: #2a2a2a;
+    --btn-fg: #f5f5f5;
+    --btn-active-bg: #f5f5f5;
+    --btn-active-fg: #0f0f0f;
+    --btn-hover-bg: #404040;
+    --btn-hover-fg: #ffffff;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ==========================================================================
+   2. BASE STYLES
+   ========================================================================== */
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* ==========================================================================
+   3. BUTTON STYLES
+   ========================================================================== */
+
+button {
+  border-radius: 12px;
+  border: 1px solid var(--bar-border);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+button:hover {
+  background: var(--btn-hover-bg);
+  color: var(--btn-hover-fg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   4. APP LAYOUT
+   ========================================================================== */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  flex: 1;
+  padding: 2rem clamp(1rem, 5vw, 3rem);
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* ==========================================================================
+   5. HEADER & NAVIGATION
+   ========================================================================== */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bar);
+  border-bottom: 1px solid var(--bar-border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+}
+
+.app-title h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.year-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.year-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  min-width: 60px;
+}
+
+.year-btn.active {
+  background: var(--btn-active-bg);
+  color: var(--btn-active-fg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   6. HEADBAR COMPONENT
+   ========================================================================== */
+
+.headbar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  transition: width var(--headbar-transition),
+    border-radius var(--headbar-transition),
+    box-shadow var(--headbar-transition);
+  position: relative;
+  transform-origin: center top;
+  margin: 0 auto;
+}
+
+.headbar-container.scrolled {
+  width: 0;
+}
+
+.headbar-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: max-height var(--headbar-transition),
+    width var(--headbar-transition), transform var(--headbar-transition);
+  transform-origin: center top;
+  transform: scale(1);
+}
+
+.headbar-container.scrolled .headbar-image {
+  transform: scale(0);
+  transition: max-height var(--headbar-transition),
+    transform var(--headbar-transition), width var(--headbar-transition);
+}
+
+/* ==========================================================================
+   7. YEAR TIMELINE COMPONENTS
+   ========================================================================== */
+
+.year-image-container {
+  width: 100%;
+}
+
+.year-section {
+  margin-bottom: 4rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  scroll-margin-top: 100px; /* Offset for sticky header */
+}
+
+.year-section:hover {
+  transform: translateY(-2px);
+}
+
+.year-section:last-child {
+  margin-bottom: 2rem;
+}
+
+.year-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.year-header h2 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  position: relative;
+}
+
+.year-header h2::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+.year-header p {
+  font-size: 1rem;
+  color: var(--fg);
+  opacity: 0.8;
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.year-image-wrapper {
+  display: flex;
+  justify-content: center;
+  background: var(--bar);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  border: 1px solid var(--bar-border);
+  transition: box-shadow 0.3s ease;
+}
+
+.year-section:hover .year-image-wrapper {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.year-timeline-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.year-timeline-image:hover {
+  transform: scale(1.02);
+}
+
+/* Year separator */
+.year-section:not(:last-child)::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--bar-border),
+    transparent
+  );
+  margin: 3rem 0;
+}
+
+/* ==========================================================================
+   8. FLOATING ELEMENTS
+   ========================================================================== */
+
+.float-btns {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 200;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.fab:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   9. RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Mobile and Tablet */
+@media (max-width: 768px) {
+  /* Hide app title on mobile */
+  .app-title {
+    display: none;
+  }
+
+  /* Headbar adjustments */
+  .headbar-container {
+    padding: 0.5rem 0;
+  }
+
+  .headbar-image {
+    max-height: 80px;
+  }
+
+  .headbar-container.scrolled {
+    width: 80%;
+  }
+
+  .headbar-container.scrolled .headbar-image {
+    transform: scale(1);
+  }
+
+  /* Topbar adjustments */
+  .topbar-inner {
+    height: 56px;
+    padding: 0 1rem;
+    justify-content: center;
+  }
+
+  /* Page adjustments */
+  .page {
+    padding: 1rem;
+  }
+
+  /* Year section adjustments */
+  .year-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 80px;
+  }
+
+  .year-section:not(:last-child)::after {
+    margin: 2rem 0;
+  }
+
+  .year-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .year-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .year-header h2::before {
+    width: 40px;
+    height: 3px;
+  }
+
+  .year-header p {
+    font-size: 0.9rem;
+  }
+
+  .year-image-wrapper {
+    padding: 1rem;
+  }
+
+  /* Button adjustments */
+  .year-btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8rem;
+    min-width: 50px;
+  }
+
+  .year-nav {
+    gap: 0.25rem;
+  }
+
+  /* Floating button adjustments */
+  .float-btns {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .fab {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .headbar-container.scrolled {
+    width: 80%;
+  }
+
+  .headbar-container.scrolled .headbar-image {
+    transform: scale(1);
+  }
+
+  .topbar-inner {
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   10. ACCESSIBILITY & ANIMATIONS
+   ========================================================================== */
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
